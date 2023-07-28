@@ -3,7 +3,9 @@ import React from "react";
 import {
   Button,
   Card,
+  CardActions,
   CardBody,
+  CardHeader,
   CardTitle,
   DescriptionList,
   DescriptionListDescription,
@@ -12,45 +14,55 @@ import {
   Divider,
   Grid,
   GridItem,
-  Level,
-  LevelItem,
   List,
   ListItem,
   PageSection,
   PageSectionVariants,
+  SearchInput,
   Text,
   TextContent,
+  Toolbar,
+  ToolbarContent,
+  ToolbarItem,
 } from "@patternfly/react-core";
 import DownloadIcon from "@patternfly/react-icons/dist/esm/icons/download-icon";
 import CubeIcon from "@patternfly/react-icons/dist/esm/icons/cube-icon";
 import ShielVirusIcon from "@patternfly/react-icons/dist/esm/icons/shield-virus-icon";
 import FileAltIcon from "@patternfly/react-icons/dist/esm/icons/file-alt-icon";
 import { ChartDonut } from "@patternfly/react-charts";
+import { useSbomQuery } from "@app/queries/sbom";
+import {
+  TableComposable,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@patternfly/react-table";
 
 export const OverviewPage: React.FC = () => {
+  const sbomQuery = useSbomQuery();
+
   return (
     <>
       <PageSection variant={PageSectionVariants.light}>
         <TextContent>
-          <Text component="h1">My SBOMB name</Text>
-          <Text component="p">Version: 1.0.0</Text>
-          <Text component="small">Generated on 12/12/2023</Text>
+          <Text component="h1">{sbomQuery.data?.title}</Text>
+          <Text component="p">{sbomQuery.data?.version}</Text>
         </TextContent>
       </PageSection>
       <PageSection variant={PageSectionVariants.light}>
         <Grid hasGutter>
           <GridItem md={6}>
-            <Card isFlat>
-              <CardTitle>
-                <Level>
-                  <LevelItem>Summary of the stack</LevelItem>
-                  <LevelItem>
-                    <Button variant="plain" aria-label="Action">
-                      <DownloadIcon />
-                    </Button>
-                  </LevelItem>
-                </Level>
-              </CardTitle>
+            <Card isFlat isFullHeight>
+              <CardHeader>
+                <CardTitle>Summary of the stack</CardTitle>
+                <CardActions>
+                  <Button variant="plain" aria-label="Action">
+                    <DownloadIcon />
+                  </Button>
+                </CardActions>
+              </CardHeader>
               <Divider />
               <CardBody>
                 <DescriptionList
@@ -106,7 +118,7 @@ export const OverviewPage: React.FC = () => {
             </Card>
           </GridItem>
           <GridItem md={6}>
-            <Card isFlat>
+            <Card isFlat isFullHeight>
               <CardTitle>Overview of the stack</CardTitle>
               <Divider />
               <CardBody>
@@ -145,7 +157,31 @@ export const OverviewPage: React.FC = () => {
           </GridItem>
         </Grid>
       </PageSection>
-      <PageSection variant={PageSectionVariants.default}>content</PageSection>
+      <PageSection variant={PageSectionVariants.default}>
+        <Toolbar id="toolbar-items">
+          <ToolbarContent>
+            <ToolbarItem variant="search-filter">
+              <SearchInput aria-label="Items example search input" />
+            </ToolbarItem>
+          </ToolbarContent>
+        </Toolbar>
+        <TableComposable>
+          <Thead>
+            <Tr>
+              <Th width={10}>ID</Th>
+              <Th>Description</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {sbomQuery.data?.dependencies.map((dep, index) => (
+              <Tr key={index}>
+                <Td>{index}</Td>
+                <Td>{dep}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </TableComposable>
+      </PageSection>
     </>
   );
 };
