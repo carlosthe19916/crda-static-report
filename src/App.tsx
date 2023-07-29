@@ -5,7 +5,7 @@ import { HashRouter } from "react-router-dom";
 import { Theme } from "@app/layout/theme-constants";
 
 import { DefaultLayout } from "./layout";
-import { AppRoutes } from "./Routes";
+import { OverviewPage } from "./pages/overview/overview";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -20,7 +20,8 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <DefaultLayout>
-        <AppRoutes />
+        {/* <AppRoutes /> */}
+        <OverviewPage />
       </DefaultLayout>
     </HashRouter>
   );
