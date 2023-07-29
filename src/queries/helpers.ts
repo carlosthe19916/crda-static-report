@@ -33,9 +33,7 @@ export const useMockableQuery = <
   return useQuery<TQueryFnData, TError, TData>({
     ...params,
     queryFn:
-      (process.env.REACT_APP_DATA_SOURCE !== "mock" &&
-        process.env.REACT_APP_DATA_SOURCE !== "offline") ||
-      (window as any)["WINDUP_SETTINGS"].forceOnline
+      process.env.REACT_APP_DATA_SOURCE === "online"
         ? params.queryFn
         : () => {
             return mockPromise(

@@ -1,1 +1,0 @@
-window["WINDUP_THEME"] = "windup";

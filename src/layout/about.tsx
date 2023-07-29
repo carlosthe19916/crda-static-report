@@ -18,7 +18,7 @@ import InfoAltIcon from "@patternfly/react-icons/dist/esm/icons/info-alt-icon";
 
 import { Theme } from "./theme-constants";
 
-const WINDUP_VERSION = (window as any)["windupVersion"];
+const REPORT_VERSION = (window as any)["reportVersion"];
 
 interface IButtonAboutAppProps {
   isOpen: boolean;
@@ -44,9 +44,7 @@ export const AboutApp: React.FC<IButtonAboutAppProps> = ({
           <a href={Theme.websiteURL} target="_blank" rel="noopener noreferrer">
             {Theme.name}
           </a>{" "}
-          allows application architects and developers to quickly decompile,
-          analyze, assess and modernize large scale application portfolios and
-          migrate them to Red Hat Middleware, cloud and containers.
+          is a visualization of your report...
         </p>
       </TextContent>
       <TextContent className="pf-u-py-xl">
@@ -54,7 +52,7 @@ export const AboutApp: React.FC<IButtonAboutAppProps> = ({
           <GridItem lg={7}>
             <span className="dt">Version</span>
           </GridItem>
-          <GridItem lg={5}>{WINDUP_VERSION}</GridItem>
+          <GridItem lg={5}>{REPORT_VERSION}</GridItem>
         </Grid>
       </TextContent>
       <TextContent className="pf-u-py-xl">
